@@ -22,21 +22,29 @@ class Chef(Thread):
 
     """ Chef serve o pedido preparado."""
     def serve(self):
-        print("[READY] - O chefe está servindo o pedido para a senha {}.".format(0)) # Modificar para o numero do ticket
+        print("[READY] - O chefe está servindo o pedido para a senha {}.".format(self._senha_atual)) # Modificar para o numero do ticket
     
     """ O chefe espera algum pedido vindo da equipe."""
     def wait_order(self):
-        if (len(get_fila_pedidos()) == 0):
-            print("O chefe está esperando algum pedido.")
-            self._semaforo_fila_vazia.acquire()
+        #while (True):
+            if (len(get_fila_pedidos()) == 0):
+                print("O chefe está esperando algum pedido.")
+                #self._semaforo_fila_vazia.acquire()
+                #ADICIONAR A LINHA ACIMA QUANDO IMPLEMENTAR A ADIÇÃO NA FILA PELA CREW
 
-        acquire_semaforo_fila()
-        self._senha_atual = get_fila_pedidos()[0]
-        remove_fila_pedidos()
-        release_semaforo_fila()
+            acquire_semaforo_fila()
+            self._senha_atual = get_fila_pedidos()[0]
+            remove_fila_pedidos()
+            acquire_semaforo_clientes_total()
+            decrease_qnt_clientes_total()
+            release_semaforo_clientes_total()
+            release_semaforo_fila()
 
     """ Thread do chefe."""
     def run(self):
-        self.wait_order()
-        self.cook()
-        self.serve()
+        while (get_qnt_clientes_total() > 0):
+            self.wait_order()
+            self.cook()
+            self.serve()
+            
+        print("O chefe atendeu todos os clientes e está indo embora.")

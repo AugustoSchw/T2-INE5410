@@ -19,7 +19,7 @@ def definitions(argv, threads):
     Esse espaco e reservado para voce definir variaveis globais que serao utilizadas por todas as threads.
     Lembre-se de criar as variaveis globais no arquivo restaurant/shared.py
     """
-    pass
+    set_qnt_clientes_total(argv.clients)
 
 def close_all(argv, threads):
     """

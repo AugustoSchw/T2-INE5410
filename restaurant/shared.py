@@ -9,7 +9,13 @@
 from threading import Thread, Semaphore
 
 # Variaveis globais
-fila_pedidos = []   # Fila de pedidos
+fila_pedidos = [2, 5, 7, 9]   # Fila de pedidos
+"""
+IMPORTANTE:
+QUANDO IMPLEMENTAR A ADIÇÃO NA FILA PELA CREW, ESVAZIAR A FILA DE PEDIDOS
+IMPORTANTE
+IMPORTANTE
+"""
 def get_fila_pedidos():
     global fila_pedidos
     return fila_pedidos
@@ -34,3 +40,29 @@ def acquire_semaforo_fila():
 def release_semaforo_fila():
     global semaforo_fila
     semaforo_fila.release()
+
+qnt_clientes_total = 0
+def get_qnt_clientes_total():
+    global qnt_clientes_total
+    return qnt_clientes_total
+
+def set_qnt_clientes_total(qnt):
+    global qnt_clientes_total
+    qnt_clientes_total = qnt
+
+def decrease_qnt_clientes_total():
+    global qnt_clientes_total
+    qnt_clientes_total -= 1
+
+semoro_clientes_total = Semaphore(1)
+def get_semaforo_clientes_total():
+    global semoro_clientes_total
+    return semoro_clientes_total
+
+def acquire_semaforo_clientes_total():
+    global semoro_clientes_total
+    semoro_clientes_total.acquire()
+
+def release_semaforo_clientes_total():
+    global semoro_clientes_total
+    semoro_clientes_total.release()
