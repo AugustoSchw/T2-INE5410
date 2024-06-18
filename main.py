@@ -12,6 +12,8 @@ from restaurant.totem import Totem
 # Importe o que achar necessario aqui
 # import my_module
 
+from restaurant.shared import *
+
 def definitions(argv, threads):
     """
     Esse espaco e reservado para voce definir variaveis globais que serao utilizadas por todas as threads.
