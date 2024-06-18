@@ -10,3 +10,5 @@ Arquivo chef.py:
 
     self._semaforo_fila_vazia -> se chegar na fila e ela estiver vazia, porém todos os clientes ainda não foram atendidos, ocorre a linha 31 de chef.py e trava o funcionamento da thread chef até que seja resumido, com a adição na fila por crew.py (NÃO ESTÁ FEITO AINDA)
     Muito importante: Assim que fizer crew.py, tirar o comentario da linha 31 de chef.py
+
+    ATENCAO: Como somente o chefe finaliza assim que ele cozinha para todos os clientes, seria uma alteração interessante trocar "qnt_clientes_total" por "qnt_pratos_clientes" ou algo do tipo, para que fique claro que é só para o chef.py.
