@@ -1,0 +1,12 @@
+Arquivo chef.py:
+    Feitos:
+        Deve aguardar chamados da equipe com pedidos de clientes;
+        Deve cozinhar todos os pedidos, retirados de uma fila;
+        Depois que tiver cozinhado os pedidos de todos os clientes, deve encerrar sua execução;
+
+    Falta:
+        Deve avisar que um pedido está pronto;
+            -> avisar = avisar o cliente que o prato está pronto. para que o cliente possa continuar sua execução sentando na mesa
+
+    self._semaforo_fila_vazia -> se chegar na fila e ela estiver vazia, porém todos os clientes ainda não foram atendidos, ocorre a linha 31 de chef.py e trava o funcionamento da thread chef até que seja resumido, com a adição na fila por crew.py (NÃO ESTÁ FEITO AINDA)
+    Muito importante: Assim que fizer crew.py, tirar o comentario da linha 31 de chef.py

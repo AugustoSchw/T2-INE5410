@@ -23,6 +23,9 @@ class Chef(Thread):
     """ Chef serve o pedido preparado."""
     def serve(self):
         print("[READY] - O chefe está servindo o pedido para a senha {}.".format(self._senha_atual)) # Modificar para o numero do ticket
+        acquire_semaforo_clientes_total() # Adquire o semáforo da variavel global qnt_clientes_total
+        decrease_qnt_clientes_total() # Diminui a quantidade de clientes total (pois atendeu um cliente)
+        release_semaforo_clientes_total() # Libera o semáforo da variavel global qnt_clientes_total
     
     """ O chefe espera algum pedido vindo da equipe."""
     def wait_order(self):
@@ -34,9 +37,6 @@ class Chef(Thread):
         acquire_semaforo_fila() # Adquire o semáforo da fila de pedidos
         self._senha_atual = get_fila_pedidos()[0]   # Pega o primeiro pedido da fila
         remove_fila_pedidos()   # Remove o pedido da fila
-        acquire_semaforo_clientes_total() # Adquire o semáforo da variavel global qnt_clientes_total
-        decrease_qnt_clientes_total() # Diminui a quantidade de clientes total (pois atendeu um cliente)
-        release_semaforo_clientes_total() # Libera o semáforo da variavel global qnt_clientes_total
         release_semaforo_fila() # Libera o semáforo da fila de pedidos
 
     """ Thread do chefe."""
