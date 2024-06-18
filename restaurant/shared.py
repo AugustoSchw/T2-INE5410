@@ -41,7 +41,7 @@ def release_semaforo_fila():
     global semaforo_fila
     semaforo_fila.release()
 
-qnt_clientes_total = 0
+qnt_clientes_total = 0  # Quantidade de clientes total. Serve para o chef saber quando todos os clientes foram atendidos e ele pode ir embora.
 def get_qnt_clientes_total():
     global qnt_clientes_total
     return qnt_clientes_total
@@ -54,7 +54,7 @@ def decrease_qnt_clientes_total():
     global qnt_clientes_total
     qnt_clientes_total -= 1
 
-semoro_clientes_total = Semaphore(1)
+semoro_clientes_total = Semaphore(1)    # Para previnir condição de corrida quando alterar a variavel global qnt_clientes_total
 def get_semaforo_clientes_total():
     global semoro_clientes_total
     return semoro_clientes_total

@@ -26,19 +26,18 @@ class Chef(Thread):
     
     """ O chefe espera algum pedido vindo da equipe."""
     def wait_order(self):
-        #while (True):
-            if (len(get_fila_pedidos()) == 0):
-                print("O chefe está esperando algum pedido.")
-                #self._semaforo_fila_vazia.acquire()
-                #ADICIONAR A LINHA ACIMA QUANDO IMPLEMENTAR A ADIÇÃO NA FILA PELA CREW
+        if (len(get_fila_pedidos()) == 0):  # Se a fila de pedidos estiver vazia, o chefe espera.
+            print("O chefe está esperando algum pedido.")
+            #self._semaforo_fila_vazia.acquire()    # Vai fazer que o chefe espere até que algum pedido entre na fila para continuar a execução.
+            #ADICIONAR A LINHA ACIMA QUANDO IMPLEMENTAR A ADIÇÃO NA FILA PELA CREW
 
-            acquire_semaforo_fila()
-            self._senha_atual = get_fila_pedidos()[0]
-            remove_fila_pedidos()
-            acquire_semaforo_clientes_total()
-            decrease_qnt_clientes_total()
-            release_semaforo_clientes_total()
-            release_semaforo_fila()
+        acquire_semaforo_fila() # Adquire o semáforo da fila de pedidos
+        self._senha_atual = get_fila_pedidos()[0]   # Pega o primeiro pedido da fila
+        remove_fila_pedidos()   # Remove o pedido da fila
+        acquire_semaforo_clientes_total() # Adquire o semáforo da variavel global qnt_clientes_total
+        decrease_qnt_clientes_total() # Diminui a quantidade de clientes total (pois atendeu um cliente)
+        release_semaforo_clientes_total() # Libera o semáforo da variavel global qnt_clientes_total
+        release_semaforo_fila() # Libera o semáforo da fila de pedidos
 
     """ Thread do chefe."""
     def run(self):
@@ -46,5 +45,5 @@ class Chef(Thread):
             self.wait_order()
             self.cook()
             self.serve()
-            
+
         print("O chefe atendeu todos os clientes e está indo embora.")
