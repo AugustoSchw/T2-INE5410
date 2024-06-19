@@ -7,9 +7,9 @@
 #       return my_global_variable
 
 from threading import Thread, Semaphore
-from restaurant.totem import Totem
+#from restaurant.totem import Totem
 # Variaveis globais
-fila_pedidos = [2, 5, 7, 9]   # Fila de pedidos
+fila_pedidos = []   # Fila de pedidos
 """
 IMPORTANTE:
 QUANDO IMPLEMENTAR A ADIÇÃO NA FILA PELA CREW, ESVAZIAR A FILA DE PEDIDOS
@@ -23,7 +23,6 @@ def get_fila_pedidos():
 def add_fila_pedidos(pedido):
     global fila_pedidos
     fila_pedidos.append(pedido)
-    fila_pedidos = sorted(fila_pedidos)
 
 def remove_fila_pedidos():
     global fila_pedidos
@@ -43,11 +42,11 @@ def release_semaforo_fila():
     global semaforo_fila
     semaforo_fila.release()
 
-qnt_clientes_total = 0  # Quantidade de clientes total. Serve para o chef saber quando todos os clientes foram atendidos e ele pode ir embora.
 def get_qnt_clientes_total():
     global qnt_clientes_total
     return qnt_clientes_total
 
+qnt_clientes_total = 0  # Quantidade de clientes total. Serve para o chef saber quando todos os clientes foram atendidos e ele pode ir embora.
 def set_qnt_clientes_total(qnt):
     global qnt_clientes_total
     qnt_clientes_total = qnt
@@ -78,3 +77,51 @@ def get_totem_restaurante(): # Função para pegar o totem
 def set_totem_restaurante(totem):   # Função para setar o totem
     global totem_restaurante
     totem_restaurante = totem
+
+semaforo_chef_fila_vazia = Semaphore(0) # Semáforo para quando a fila estiver vazia. Faz com que o chef espere até que algum pedido entre na fila.
+
+def get_semaforo_chef_fila_vazia():
+    global semaforo_chef_fila_vazia
+    return semaforo_chef_fila_vazia
+
+def acquire_semaforo_chef_fila_vazia():
+    global semaforo_chef_fila_vazia
+    semaforo_chef_fila_vazia.acquire()
+
+def release_semaforo_chef_fila_vazia():
+    global semaforo_chef_fila_vazia
+    semaforo_chef_fila_vazia.release()
+
+lista_clientes = [] # Lista de clientes
+
+def get_lista_clientes():
+    global lista_clientes
+    return lista_clientes
+
+def add_lista_clientes(cliente):
+    global lista_clientes
+    lista_clientes.append(cliente)
+
+lista_crew = [] # Lista de membros da equipe
+
+def get_lista_crew():
+    global lista_crew
+    return lista_crew
+
+def add_lista_crew(crew):
+    global lista_crew
+    lista_crew.append(crew)
+
+semaforo_espera_entrar = Semaphore(0) # Semáforo para esperar o cliente entrar no restaurante
+
+def get_semaforo_espera_entrar():
+    global semaforo_espera_entrar
+    return semaforo_espera_entrar
+
+def acquire_semaforo_espera_entrar():
+    global semaforo_espera_entrar
+    semaforo_espera_entrar.acquire()
+
+def release_semaforo_espera_entrar():
+    global semaforo_espera_entrar
+    semaforo_espera_entrar.release()

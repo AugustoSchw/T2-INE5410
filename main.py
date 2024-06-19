@@ -21,6 +21,11 @@ def definitions(argv, threads):
     """
     set_qnt_clientes_total(argv.clients)
     set_totem_restaurante(Totem(argv.clients))
+    for thread in threads:
+        if isinstance(thread, Client):
+            add_lista_clientes(thread)
+        elif isinstance(thread, Crew):
+            add_lista_crew(thread)
 
 def close_all(argv, threads):
     """

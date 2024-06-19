@@ -11,7 +11,7 @@ class Chef(Thread):
     
     def __init__(self):
         super().__init__()
-        self._semaforo_fila_vazia = Semaphore(0) # Semáforo para quando a fila estiver vazia. Faz com que o chef espere até que algum pedido entre na fila.
+        #self._semaforo_fila_vazia = Semaphore(0) # Semáforo para quando a fila estiver vazia. Faz com que o chef espere até que algum pedido entre na fila.
         self._senha_atual = 0 # Senha do pedido atual
         # Insira o que achar necessario no construtor da classe.
 
@@ -32,6 +32,7 @@ class Chef(Thread):
         if (len(get_fila_pedidos()) == 0):  # Se a fila de pedidos estiver vazia, o chefe espera.
             print("O chefe está esperando algum pedido.")
             #self._semaforo_fila_vazia.acquire()    # Vai fazer que o chefe espere até que algum pedido entre na fila para continuar a execução.
+            acquire_semaforo_chef_fila_vazia() # Adquire o semáforo da fila vazia
             #ADICIONAR A LINHA ACIMA QUANDO IMPLEMENTAR A ADIÇÃO NA FILA PELA CREW
 
         acquire_semaforo_fila() # Adquire o semáforo da fila de pedidos
