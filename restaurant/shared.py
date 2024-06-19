@@ -7,7 +7,7 @@
 #       return my_global_variable
 
 from threading import Thread, Semaphore
-
+from restaurant.totem import Totem
 # Variaveis globais
 fila_pedidos = [2, 5, 7, 9]   # Fila de pedidos
 """
@@ -23,10 +23,12 @@ def get_fila_pedidos():
 def add_fila_pedidos(pedido):
     global fila_pedidos
     fila_pedidos.append(pedido)
+    fila_pedidos = sorted(fila_pedidos)
 
 def remove_fila_pedidos():
     global fila_pedidos
     fila_pedidos.pop(0)
+
 
 semaforo_fila = Semaphore(1)    # Para previnir condição de corrida
 def get_semaforo_fila():
@@ -66,3 +68,13 @@ def acquire_semaforo_clientes_total():
 def release_semaforo_clientes_total():
     global semoro_clientes_total
     semoro_clientes_total.release()
+
+totem_restaurante = None # Inicialização do totem
+
+def get_totem_restaurante(): # Função para pegar o totem
+    global totem_restaurante
+    return totem_restaurante
+
+def set_totem_restaurante(totem):   # Função para setar o totem
+    global totem_restaurante
+    totem_restaurante = totem
