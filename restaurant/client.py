@@ -1,7 +1,7 @@
 # imports do Python
 from threading import Thread
 from time import sleep
-
+from restaurant.shared import *
 # imports do projeto
 
 """
@@ -13,10 +13,12 @@ class Client(Thread):
     def __init__(self, i):
         self._id = i
         super().__init__()
+        self._ticket_number = None
         # Insira o que achar necessario no construtor da classe.
 
     """ Pega o ticket do totem."""
     def get_my_ticket(self):
+        self._ticket_number = get_totem_restaurante().get_ticket()
         print("[TICKET] - O cliente {} pegou o ticket.".format(self._id))
 
     """ Espera ser atendido pela equipe. """

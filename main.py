@@ -20,6 +20,7 @@ def definitions(argv, threads):
     Lembre-se de criar as variaveis globais no arquivo restaurant/shared.py
     """
     set_qnt_clientes_total(argv.clients)
+    set_totem_restaurante(Totem(argv.clients))
 
 def close_all(argv, threads):
     """
