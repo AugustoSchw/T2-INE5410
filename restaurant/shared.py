@@ -41,12 +41,12 @@ def acquire_semaforo_fila():
 def release_semaforo_fila():
     global semaforo_fila
     semaforo_fila.release()
+qnt_clientes_total = 0  # Quantidade de clientes total. Serve para o chef saber quando todos os clientes foram atendidos e ele pode ir embora.
 
 def get_qnt_clientes_total():
     global qnt_clientes_total
     return qnt_clientes_total
 
-qnt_clientes_total = 0  # Quantidade de clientes total. Serve para o chef saber quando todos os clientes foram atendidos e ele pode ir embora.
 def set_qnt_clientes_total(qnt):
     global qnt_clientes_total
     qnt_clientes_total = qnt
@@ -113,7 +113,6 @@ def add_lista_crew(crew):
     lista_crew.append(crew)
 
 semaforo_espera_entrar = Semaphore(0) # Semáforo para esperar o cliente entrar no restaurante
-
 def get_semaforo_espera_entrar():
     global semaforo_espera_entrar
     return semaforo_espera_entrar
