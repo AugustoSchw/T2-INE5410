@@ -3,6 +3,8 @@ from threading import Thread, Semaphore
 from time import sleep
 from random import randint
 from restaurant.shared import *
+#from restaurant.client import Client
+
 
 """
     Não troque o nome das variáveis compartilhadas, a assinatura e o nomes das funções.
@@ -24,6 +26,9 @@ class Chef(Thread):
     def serve(self):
         print("[READY] - O chefe está servindo o pedido para a senha {}.".format(self._senha_atual)) # Modificar para o numero do ticket
         acquire_semaforo_clientes_total() # Adquire o semáforo da variavel global qnt_clientes_total
+        for client in get_lista_clientes():
+            if client.get_ticket_number() == self._senha_atual:
+                client.get_semaforo_wait_chef().release() # Libera o semáforo para que o cliente possa pegar o pedido
         decrease_qnt_clientes_total() # Diminui a quantidade de clientes total (pois atendeu um cliente)
         release_semaforo_clientes_total() # Libera o semáforo da variavel global qnt_clientes_total
     

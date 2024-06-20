@@ -125,3 +125,31 @@ def acquire_semaforo_espera_entrar():
 def release_semaforo_espera_entrar():
     global semaforo_espera_entrar
     semaforo_espera_entrar.release()
+
+clientes_atendidos_crew = 0 # Quantidade de clientes que devem ser atendidos
+
+def set_clientes_atendidos_crew(qnt):
+    global clientes_atendidos_crew
+    clientes_atendidos_crew = qnt
+
+def get_clientes_atendidos_crew():
+    global clientes_atendidos_crew
+    return clientes_atendidos_crew
+
+def decrease_clientes_atendidos_crew():
+    global clientes_atendidos_crew
+    clientes_atendidos_crew -= 1
+
+semaforo_clientes_atendidos_crew = Semaphore(1) # Semáforo para previnir condição de corrida
+
+def get_semaforo_clientes_atendidos_crew():
+    global semaforo_clientes_atendidos_crew
+    return semaforo_clientes_atendidos_crew
+
+def acquire_semaforo_clientes_atendidos_crew():
+    global semaforo_clientes_atendidos_crew
+    semaforo_clientes_atendidos_crew.acquire()
+
+def release_semaforo_clientes_atendidos_crew():
+    global semaforo_clientes_atendidos_crew
+    semaforo_clientes_atendidos_crew.release()

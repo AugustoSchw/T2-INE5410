@@ -39,7 +39,7 @@ class Client(Thread):
     def order(self):
         print("[ORDER] - O cliente {} pediu algo.".format(self._id))
         for crew in get_lista_crew():
-            if crew._ticket_atendendo_atual == self._ticket_number:
+            if crew.get_ticket_atendendo_atual() == self._ticket_number:
                 crew._semaforo_espera_escolha.release()
 
     """ Espera pelo pedido ficar pronto. """
