@@ -18,6 +18,7 @@ class Crew(Thread):
     """ O membro da equipe espera um cliente. """    
     def wait(self):
         print("O membro da equipe {} está esperando um cliente.".format(self._id))
+
         acquire_semaforo_espera_entrar() # Adquire o semáforo para que espere o cliente entrar no restaurante para continuar o funcionamento
 
     """ O membro da equipe chama o cliente da senha ticket."""
@@ -46,10 +47,17 @@ class Crew(Thread):
         return self._ticket_atendendo_atual
 
     def run(self):
+        
         while (get_clientes_atendidos_crew() > 0):
             self.wait()
             acquire_semaforo_clientes_atendidos_crew() # Adquire o semáforo da variavel global clientes_atendidos_crew
             decrease_clientes_atendidos_crew() # Diminui a quantidade de clientes que a equipe atendeu
             release_semaforo_clientes_atendidos_crew() # Libera o semáforo da variavel global clientes_atendidos_crew
+            if (len(get_totem_restaurante().call) == 0):
+                break
+
             self.call_client(get_totem_restaurante().call)
             self.make_order(self.get_ticket_atendendo_atual())
+
+        for i in range(len(get_lista_crew()) - get_qnt_clientes_total()):
+            release_semaforo_espera_entrar() # Libera o semáforo caso tenha algum membro da equipe esperando o cliente entrar no restaurante
