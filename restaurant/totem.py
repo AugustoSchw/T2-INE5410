@@ -1,6 +1,6 @@
 # imports do Python
 from random import randint
-from threading import Thread, Semaphore
+from threading import Thread, Semaphore, Lock
 from restaurant.shared import get_qnt_clientes_total, semaforo_espera_entrar, release_semaforo_espera_entrar
 """
     Não troque o nome das variáveis compartilhadas, a assinatura e o nomes das funções.
@@ -12,7 +12,7 @@ class Totem:
         self.already_sampled = list()
         self.maximum_ticket_number = number_of_clients * 5
         self.call = list()
-        self.semaforo_alteracao = Semaphore(1) # Semáforo para previnir condição de corrida
+        self.lock = Lock()
         # Insira o que achar necessario no construtor da classe.
 
     """ 

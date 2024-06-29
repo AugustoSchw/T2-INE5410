@@ -27,13 +27,13 @@ class Client(Thread):
     """ Espera ser atendido pela equipe. """
     def wait_crew(self):
         print("[WAIT] - O cliente {} esta aguardando atendimento.".format(self._id))
-        self._semaforo_wait_atendente.acquire()
+        self._semaforo_wait_atendente.acquire() # Acquire no semáforo para aguardar atendimento de um funcionário
 
     
     """ O cliente pensa no pedido."""
     def think_order(self):
         print("[THINK] - O cliente {} esta pensando no que pedir.".format(self._id))
-        sleep(2)
+        sleep(2) # Cliente fica 2 segundos pensando no que vai pedir
 
     """ O cliente faz o pedido."""
     def order(self):
