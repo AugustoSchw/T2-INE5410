@@ -41,6 +41,7 @@ def acquire_semaforo_fila():
 def release_semaforo_fila():
     global semaforo_fila
     semaforo_fila.release()
+    
 qnt_clientes_total = 0  # Quantidade de clientes total. Serve para o chef saber quando todos os clientes foram atendidos e ele pode ir embora.
 
 def get_qnt_clientes_total():

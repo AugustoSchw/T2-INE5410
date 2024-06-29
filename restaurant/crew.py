@@ -1,5 +1,5 @@
 # imports do Python
-from threading import Thread, Semaphore
+from threading import Thread, Semaphore, Lock
 from restaurant.shared import *
 from restaurant.client import Client
 """
@@ -13,6 +13,7 @@ class Crew(Thread):
         self._id = id
         self._semaforo_espera_escolha = Semaphore(0) # Semáforo para esperar o cliente escolher o pedido
         self._ticket_atendendo_atual = None
+        self.lock_pedidos = Lock()
         # Insira o que achar necessario no construtor da classe.
 
     """ O membro da equipe espera um cliente. """    
@@ -38,13 +39,16 @@ class Crew(Thread):
 
     def make_order(self, order):
         print("[STORING] - O membro da equipe {} está anotando o pedido {} para o chef.".format(self._id, order))
-        acquire_semaforo_fila()
+        #acquire_semaforo_fila()
+        self.lock_pedidos.acquire()
 
         add_fila_pedidos(order)
 
-        release_semaforo_fila()
+        self.lock_pedidos.release()
 
-        release_semaforo_chef_fila_vazia()
+        #release_semaforo_fila()
+
+        release_semaforo_chef_fila_vazia() # Término de anotar o chefe do pedido aqui
 
     """ Thread do membro da equipe."""
 
@@ -55,7 +59,7 @@ class Crew(Thread):
         
         while (get_clientes_atendidos_crew() > 0):
             self.wait()
-            
+
             acquire_semaforo_clientes_atendidos_crew() # Adquire o semáforo da variavel global clientes_atendidos_crew
             decrease_clientes_atendidos_crew() # Diminui a quantidade de clientes que a equipe atendeu
             release_semaforo_clientes_atendidos_crew() # Libera o semáforo da variavel global clientes_atendidos_crew
