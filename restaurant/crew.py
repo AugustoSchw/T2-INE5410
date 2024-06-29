@@ -27,7 +27,7 @@ class Crew(Thread):
         #get_totem_restaurante().call.pop() # Remove o ticket da lista de chamadas
         ticket_atendido = get_totem_restaurante().call.pop(0) # Pega o ticket que está na primeira posição da lista de chamadas
         print("[CALLING] - O membro da equipe {} está chamando o cliente da senha {}.".format(self._id, ticket_atendido))
-        get_totem_restaurante().semaforo_alteracao.release()
+        get_totem_restaurante().semaforo_alteracao.release() # Libera o semáforo que previne condição de corrida
         for client in get_lista_clientes():   # Procura o cliente com a senha igual a ticket
             if client.get_ticket_number() == ticket_atendido:
                 self._ticket_atendendo_atual = ticket_atendido
