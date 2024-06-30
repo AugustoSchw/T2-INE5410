@@ -3,6 +3,7 @@ from threading import Thread, Semaphore
 from time import sleep
 from restaurant.shared import *
 from restaurant.totem import Totem
+from restaurant.table import Table
 # imports do projeto
 
 """

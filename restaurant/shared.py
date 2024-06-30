@@ -7,6 +7,7 @@
 #       return my_global_variable
 
 from threading import Thread, Semaphore
+from restaurant.table import Table
 #from restaurant.totem import Totem
 # Variaveis globais
 fila_pedidos = []   # Fila de pedidos
@@ -27,20 +28,6 @@ def add_fila_pedidos(pedido):
 def remove_fila_pedidos():
     global fila_pedidos
     fila_pedidos.pop(0)
-
-
-semaforo_fila = Semaphore(1)    # Para previnir condição de corrida
-def get_semaforo_fila():
-    global semaforo_fila
-    return semaforo_fila
-
-def acquire_semaforo_fila():
-    global semaforo_fila
-    semaforo_fila.acquire()
-
-def release_semaforo_fila():
-    global semaforo_fila
-    semaforo_fila.release()
     
 qnt_clientes_total = 0  # Quantidade de clientes total. Serve para o chef saber quando todos os clientes foram atendidos e ele pode ir embora.
 
@@ -153,3 +140,17 @@ def acquire_semaforo_clientes_atendidos_crew():
 def release_semaforo_clientes_atendidos_crew():
     global semaforo_clientes_atendidos_crew
     semaforo_clientes_atendidos_crew.release()
+
+"""
+semaforo_assentos_mesa = Semaphore() # Semáforo para esperar o cliente entrar no restaurante
+def get_semaforo_assentos_mesa():
+    global semaforo_assentos_mesa
+    return semaforo_assentos_mesa
+
+def acquire_semaforo_assentos_mesa():
+    global semaforo_espera_entrar
+    semaforo_assentos_mesa.acquire()
+
+def release_semaforo_assentos_mesa():
+    global semaforo_assentos_mesa
+    semaforo_assentos_mesa.release()"""

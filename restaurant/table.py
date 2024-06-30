@@ -14,7 +14,13 @@ class Table:
     
     """ O cliente se senta na mesa."""
     def seat(self, client):
+        #self.semaforo_assentos_mesa.acquire()
         pass
+
     """ O cliente deixa a mesa."""
     def leave(self, client):
+        #self.semaforo_assentos_mesa.release()
         pass
+
+    def get_number_table(self):
+        return self._number

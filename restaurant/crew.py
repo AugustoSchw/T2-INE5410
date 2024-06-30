@@ -12,8 +12,9 @@ class Crew(Thread):
         super().__init__()
         self._id = id
         self._semaforo_espera_escolha = Semaphore(0) # Semáforo para esperar o cliente escolher o pedido
-        self._ticket_atendendo_atual = None
+        self._ticket_atendendo_atual = 99999
         self.lock_pedidos = Lock()
+        self.lock_sem_espera = Lock()
         # Insira o que achar necessario no construtor da classe.
 
     """ O membro da equipe espera um cliente. """    
@@ -24,31 +25,32 @@ class Crew(Thread):
 
     """ O membro da equipe chama o cliente da senha ticket."""
     def call_client(self, ticket):
-        get_totem_restaurante().lock.acquire() # Lock no mutex(lock) para proteger o acesso à região crítica
+        get_totem_restaurante().lock.acquire() # Lock no mutex(lock de totem) para proteger o acesso à região crítica
 
         ticket_atendido = get_totem_restaurante().call.pop(0) # Pega o ticket que está na primeira posição da lista de chamadas
         print("[CALLING] - O membro da equipe {} está chamando o cliente da senha {}.".format(self._id, ticket_atendido))
 
-        get_totem_restaurante().lock.release() # Unlock no mutex(lock) que protege esta região crítica
+        get_totem_restaurante().lock.release() # Unlock no mutex(lock de totem) que protege esta região crítica
 
+    
         for client in get_lista_clientes():   # Procura o cliente com a senha igual a ticket
             if client.get_ticket_number() == ticket_atendido:
+                self.lock_sem_espera.acquire()
                 self._ticket_atendendo_atual = ticket_atendido
+                self.lock_sem_espera.release()
+                
                 client.get_semaforo_wait_atendente().release() # Libera o semáforo para que o cliente seja atendido
                 self._semaforo_espera_escolha.acquire() # Espera o cliente escolher o pedido
 
     def make_order(self, order):
         print("[STORING] - O membro da equipe {} está anotando o pedido {} para o chef.".format(self._id, order))
-        #acquire_semaforo_fila()
         self.lock_pedidos.acquire()
 
         add_fila_pedidos(order)
 
         self.lock_pedidos.release()
 
-        #release_semaforo_fila()
-
-        release_semaforo_chef_fila_vazia() # Término de anotar o chefe do pedido aqui
+        release_semaforo_chef_fila_vazia()
 
     """ Thread do membro da equipe."""
 
@@ -56,19 +58,19 @@ class Crew(Thread):
         return self._ticket_atendendo_atual
 
     def run(self):
-        
-        while (get_clientes_atendidos_crew() > 0):
-            self.wait()
+        while (get_clientes_atendidos_crew() > 0): # Se houver clientes para serem atendidos
+            self.wait() # Crew (funcionário) irá esperar o cliente retirar uma senha para atende-lo
 
             acquire_semaforo_clientes_atendidos_crew() # Adquire o semáforo da variavel global clientes_atendidos_crew
             decrease_clientes_atendidos_crew() # Diminui a quantidade de clientes que a equipe atendeu
             release_semaforo_clientes_atendidos_crew() # Libera o semáforo da variavel global clientes_atendidos_crew
             
-            if (len(get_totem_restaurante().call) == 0):
+            if (len(get_totem_restaurante().call) == 0): # Se não houver tickets, encerra a execução
                 break
 
             self.call_client(get_totem_restaurante().call)
             self.make_order(self.get_ticket_atendendo_atual())
 
         for i in range(len(get_lista_crew()) - get_qnt_clientes_total()):
+
             release_semaforo_espera_entrar() # Libera o semáforo caso tenha algum membro da equipe esperando o cliente entrar no restaurante

@@ -37,16 +37,11 @@ class Chef(Thread):
     def wait_order(self):
         if (len(get_fila_pedidos()) == 0):  # Se a fila de pedidos estiver vazia, o chefe espera.
             print("O chefe está esperando algum pedido.")
-            #self._semaforo_fila_vazia.acquire()    # Vai fazer que o chefe espere até que algum pedido entre na fila para continuar a execução.
-            acquire_semaforo_chef_fila_vazia() # Adquire o semáforo da fila vazia
+            acquire_semaforo_chef_fila_vazia() # Faz com que o chefe espere até que algum pedido entre na fila para continuar a execução.
             #ADICIONAR A LINHA ACIMA QUANDO IMPLEMENTAR A ADIÇÃO NA FILA PELA CREW
-
-        acquire_semaforo_fila() # Adquire o semáforo da fila de pedidos
 
         self._senha_atual = get_fila_pedidos()[0]   # Pega o primeiro pedido da fila
         remove_fila_pedidos()   # Remove o pedido da fila
-        
-        release_semaforo_fila() # Libera o semáforo da fila de pedidos
 
     """ Thread do chefe."""
     def run(self):
