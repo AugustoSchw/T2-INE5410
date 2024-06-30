@@ -32,7 +32,6 @@ class Crew(Thread):
 
         get_totem_restaurante().lock.release() # Unlock no mutex(lock de totem) que protege esta região crítica
 
-        sleep(2) #trocar sleep por um semaforo ou lock
         for client in get_lista_clientes():   # Procura o cliente com a senha igual a ticket
             if client.get_ticket_number() == ticket_atendido:
 
@@ -70,6 +69,6 @@ class Crew(Thread):
             self.call_client(get_totem_restaurante().call)
             self.make_order(self.get_ticket_atendendo_atual())
         
-        for i in range(len(get_lista_crew()) - get_qnt_clientes_total() + 1): # Somar 1 pois o for sempre pega iteração -1
+        for i in range(len(get_lista_crew())): # Para a quantidade de
 
             release_semaforo_espera_entrar() # Libera o semáforo caso tenha algum membro da equipe esperando o cliente entrar no restaurante

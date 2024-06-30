@@ -23,6 +23,7 @@ class Client(Thread):
     """ Pega o ticket do totem."""
     def get_my_ticket(self):
         self._ticket_number = get_totem_restaurante().get_ticket()
+        
         print("[TICKET] - O cliente {} pegou o ticket.".format(self._id))
 
     """ Espera ser atendido pela equipe. """

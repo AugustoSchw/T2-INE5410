@@ -82,6 +82,4 @@ if __name__ == "__main__":
 
     # Fechando modulos abertos
     close_all(argv, threads)
-
-    release_semaforo_espera_entrar()
     print("[FIM] - Terminamos o dia! Abriremos amanha as 8:00.")
