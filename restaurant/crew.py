@@ -2,6 +2,7 @@
 from threading import Thread, Semaphore, Lock
 from restaurant.shared import *
 from restaurant.client import Client
+from time import sleep
 """
     Não troque o nome das variáveis compartilhadas, a assinatura e o nomes das funções.
 """
@@ -31,12 +32,11 @@ class Crew(Thread):
 
         get_totem_restaurante().lock.release() # Unlock no mutex(lock de totem) que protege esta região crítica
 
-    
+        sleep(2) #trocar sleep por um semaforo ou lock
         for client in get_lista_clientes():   # Procura o cliente com a senha igual a ticket
             if client.get_ticket_number() == ticket_atendido:
-                #self.lock_sem_espera.acquire()
+
                 self._ticket_atendendo_atual = ticket_atendido
-                #self.lock_sem_espera.release()
                 
                 client.get_semaforo_wait_atendente().release() # Libera o semáforo para que o cliente seja atendido
                 self._semaforo_espera_escolha.acquire() # Espera o cliente escolher o pedido
@@ -47,7 +47,7 @@ class Crew(Thread):
 
         add_fila_pedidos(order)
 
-        self.lock_pedidos.release() # Unlock do mutex que protege a adição de pedidos na fila
+        self.lock_pedidos.release() #Unlock do mutex que protege a adição de pedidos na fila
 
         release_semaforo_chef_fila_vazia()
 
@@ -70,6 +70,6 @@ class Crew(Thread):
             self.call_client(get_totem_restaurante().call)
             self.make_order(self.get_ticket_atendendo_atual())
         
-        for i in range(len(get_lista_crew()) - get_qnt_clientes_total()):
+        for i in range(len(get_lista_crew()) - get_qnt_clientes_total() + 1): # Somar 1 pois o for sempre pega iteração -1
 
             release_semaforo_espera_entrar() # Libera o semáforo caso tenha algum membro da equipe esperando o cliente entrar no restaurante

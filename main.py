@@ -57,7 +57,6 @@ if __name__ == "__main__":
     assert argv.crew > 0, "Numero de funcionarios deve ser maior que 0"
     assert argv.seats > 0 and argv.seats < argv.clients, "Numero de assentos deve ser maior que 0 e menor que o numero de clientes"
 
-   
     threads = list()
 
     threads.append(Chef())
@@ -84,4 +83,5 @@ if __name__ == "__main__":
     # Fechando modulos abertos
     close_all(argv, threads)
 
+    release_semaforo_espera_entrar()
     print("[FIM] - Terminamos o dia! Abriremos amanha as 8:00.")
