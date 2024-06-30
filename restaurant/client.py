@@ -55,13 +55,15 @@ class Client(Thread):
     """
     def seat_and_eat(self):
         print("[WAIT SEAT] - O cliente {} esta aguardando um lugar ficar livre".format(self._id))
-        get_table_restaurant().seat(self)
+        get_table_restaurant().seat(self) # Função seat de table é chamada, passando como argumento o cliente
         print("[SEAT] - O cliente {} encontrou um lugar livre e sentou".format(self._id))
 
     """ O cliente deixa o restaurante."""
     def leave(self):
-        get_table_restaurant().leave(self)
+        get_table_restaurant().leave(self) #Função leave de table é chamada, passando como argumento o cliente
         print("[LEAVE] - O cliente {} saiu do restaurante".format(self._id))
+
+    # Abaixo estão funções que nos retornam atributos de client, que serão utilizados em outras classes
 
     def get_semaforo_wait_atendente(self):
         return self._semaforo_wait_atendente
