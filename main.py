@@ -22,6 +22,7 @@ def definitions(argv, threads):
     set_qnt_clientes_total(argv.clients)
     set_totem_restaurante(Totem(argv.clients))
     set_clientes_atendidos_crew(argv.clients)
+    set_table_restaurant(Table(argv.seats))
     for thread in threads:
         if isinstance(thread, Client):
             add_lista_clientes(thread)

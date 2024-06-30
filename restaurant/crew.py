@@ -35,9 +35,9 @@ class Crew(Thread):
     
         for client in get_lista_clientes():   # Procura o cliente com a senha igual a ticket
             if client.get_ticket_number() == ticket_atendido:
-                self.lock_sem_espera.acquire()
+                #self.lock_sem_espera.acquire()
                 self._ticket_atendendo_atual = ticket_atendido
-                self.lock_sem_espera.release()
+                #self.lock_sem_espera.release()
                 
                 client.get_semaforo_wait_atendente().release() # Libera o semáforo para que o cliente seja atendido
                 self._semaforo_espera_escolha.acquire() # Espera o cliente escolher o pedido

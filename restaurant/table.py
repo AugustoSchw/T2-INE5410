@@ -10,16 +10,19 @@ class Table:
     def __init__(self,number):
         self._number = number
         self._semaforo_assentos_mesa = Semaphore(number) # Semáforo para gerenciar os assentos da mesa
+        self._clients = []
         # Insira o que achar necessario no construtor da classe.
     
     """ O cliente se senta na mesa."""
     def seat(self, client):
-        #self.semaforo_assentos_mesa.acquire()
+        self._semaforo_assentos_mesa.acquire()
+        self._clients.append(client)
         pass
 
     """ O cliente deixa a mesa."""
     def leave(self, client):
-        #self.semaforo_assentos_mesa.release()
+        self._clients.remove(client)
+        self._semaforo_assentos_mesa.release()
         pass
 
     def get_number_table(self):

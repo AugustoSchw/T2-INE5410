@@ -30,7 +30,7 @@ class Chef(Thread):
         for client in get_lista_clientes():
             if client.get_ticket_number() == self._senha_atual:
                 client.get_semaforo_wait_chef().release() # Libera o semáforo para que o cliente possa pegar o pedido
-        self.clientes_atendidos_chef -= 1 # Diminui a quantidade de clientes total (pois atendeu um cliente)
+        self.clientes_atendidos_chef += 1 # Aumenta a quantidade de clientes atendidos
         #release_semaforo_clientes_total() # Libera o semáforo da variavel global qnt_clientes_total
     
     """ O chefe espera algum pedido vindo da equipe."""
@@ -45,8 +45,7 @@ class Chef(Thread):
 
     """ Thread do chefe."""
     def run(self):
-        self.clientes_atendidos_chef = get_qnt_clientes_total()
-        while (self.clientes_atendidos_chef > 0):
+        while (self.clientes_atendidos_chef < get_qnt_clientes_total()):
             self.wait_order()
             self.cook()
             self.serve()

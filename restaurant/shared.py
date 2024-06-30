@@ -90,6 +90,8 @@ def add_lista_clientes(cliente):
     global lista_clientes
     lista_clientes.append(cliente)
 
+# da pra usar a lista de clientes pra substituir a qnt_clientes_total usando a funcao length
+
 lista_crew = [] # Lista de membros da equipe
 
 def get_lista_crew():
@@ -101,6 +103,7 @@ def add_lista_crew(crew):
     lista_crew.append(crew)
 
 semaforo_espera_entrar = Semaphore(0) # Semáforo para esperar o cliente entrar no restaurante
+
 def get_semaforo_espera_entrar():
     global semaforo_espera_entrar
     return semaforo_espera_entrar
@@ -112,6 +115,16 @@ def acquire_semaforo_espera_entrar():
 def release_semaforo_espera_entrar():
     global semaforo_espera_entrar
     semaforo_espera_entrar.release()
+
+table = None
+
+def get_table_restaurant():
+    global table
+    return table
+
+def set_table_restaurant(table_obj):
+    global table
+    table = table_obj
 
 clientes_atendidos_crew = 0 # Quantidade de clientes que devem ser atendidos
 

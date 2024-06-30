@@ -55,10 +55,12 @@ class Client(Thread):
     """
     def seat_and_eat(self):
         print("[WAIT SEAT] - O cliente {} esta aguardando um lugar ficar livre".format(self._id))
+        get_table_restaurant().seat(self)
         print("[SEAT] - O cliente {} encontrou um lugar livre e sentou".format(self._id))
 
     """ O cliente deixa o restaurante."""
     def leave(self):
+        get_table_restaurant().leave(self)
         print("[LEAVE] - O cliente {} saiu do restaurante".format(self._id))
 
     def get_semaforo_wait_atendente(self):
