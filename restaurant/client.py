@@ -47,7 +47,7 @@ class Client(Thread):
     """ Espera pelo pedido ficar pronto. """
     def wait_chef(self):
         print("[WAIT MEAL] - O cliente {} esta aguardando o prato.".format(self._id))
-        self._semaforo_wait_chef.acquire()
+        self._semaforo_wait_chef.acquire() # Acquire no semáforo para aguardar o chefe terminar o prato
     
     """
         O cliente reserva o lugar e se senta.

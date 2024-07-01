@@ -13,9 +13,8 @@ class Crew(Thread):
         super().__init__()
         self._id = id
         self._semaforo_espera_escolha = Semaphore(0) # Semáforo para esperar o cliente escolher o pedido
-        self._ticket_atendendo_atual = None
-        self.lock_pedidos = Lock()
-        self.lock_sem_espera = Lock()
+        self._ticket_atendendo_atual = None # Variável criada para indicar o ticket atual que estiver sendo atendido
+        self.lock_pedidos = Lock() # Mutex útil para controlar a adição de clientes na fila
         # Insira o que achar necessario no construtor da classe.
 
     """ O membro da equipe espera um cliente. """    
@@ -44,7 +43,7 @@ class Crew(Thread):
         print("[STORING] - O membro da equipe {} está anotando o pedido {} para o chef.".format(self._id, order))
         self.lock_pedidos.acquire() # Lock do mutex que protege a adição de pedidos na fila
 
-        add_fila_pedidos(order)
+        add_fila_pedidos(order) # Adição do pedido na fila
 
         self.lock_pedidos.release() #Unlock do mutex que protege a adição de pedidos na fila
 
@@ -66,8 +65,8 @@ class Crew(Thread):
             if (len(get_totem_restaurante().call) == 0): # Se não houver tickets, encerra a execução
                 break
 
-            self.call_client(get_totem_restaurante().call)
-            self.make_order(self.get_ticket_atendendo_atual())
+            self.call_client(get_totem_restaurante().call) 
+            self.make_order(self.get_ticket_atendendo_atual()) 
         
         for i in range(len(get_lista_crew())): # Para a quantidade de membros da equipe
 
