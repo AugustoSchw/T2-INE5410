@@ -8,15 +8,9 @@
 
 from threading import Thread, Semaphore
 from restaurant.table import Table
-#from restaurant.totem import Totem
 # Variaveis globais
 fila_pedidos = []   # Fila de pedidos
-"""
-IMPORTANTE:
-QUANDO IMPLEMENTAR A ADIÇÃO NA FILA PELA CREW, ESVAZIAR A FILA DE PEDIDOS
-IMPORTANTE
-IMPORTANTE
-"""
+
 def get_fila_pedidos():
     global fila_pedidos
     return fila_pedidos
@@ -90,8 +84,6 @@ def add_lista_clientes(cliente):
     global lista_clientes
     lista_clientes.append(cliente)
 
-# da pra usar a lista de clientes pra substituir a qnt_clientes_total usando a funcao length
-
 lista_crew = [] # Lista de membros da equipe
 
 def get_lista_crew():
@@ -154,16 +146,3 @@ def release_semaforo_clientes_atendidos_crew():
     global semaforo_clientes_atendidos_crew
     semaforo_clientes_atendidos_crew.release()
 
-"""
-semaforo_assentos_mesa = Semaphore() # Semáforo para esperar o cliente entrar no restaurante
-def get_semaforo_assentos_mesa():
-    global semaforo_assentos_mesa
-    return semaforo_assentos_mesa
-
-def acquire_semaforo_assentos_mesa():
-    global semaforo_espera_entrar
-    semaforo_assentos_mesa.acquire()
-
-def release_semaforo_assentos_mesa():
-    global semaforo_assentos_mesa
-    semaforo_assentos_mesa.release()"""

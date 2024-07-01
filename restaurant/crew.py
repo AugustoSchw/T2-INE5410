@@ -69,6 +69,6 @@ class Crew(Thread):
             self.call_client(get_totem_restaurante().call)
             self.make_order(self.get_ticket_atendendo_atual())
         
-        for i in range(len(get_lista_crew())): # Para a quantidade de
+        for i in range(len(get_lista_crew())): # Para a quantidade de membros da equipe
 
             release_semaforo_espera_entrar() # Libera o semáforo caso tenha algum membro da equipe esperando o cliente entrar no restaurante

@@ -1,6 +1,6 @@
 # imports do Python
 from random import randint
-from threading import Thread, Semaphore, Lock
+from threading import Lock
 from restaurant.shared import get_qnt_clientes_total, semaforo_espera_entrar, release_semaforo_espera_entrar
 """
     Não troque o nome das variáveis compartilhadas, a assinatura e o nomes das funções.
