@@ -22,7 +22,9 @@ class Client(Thread):
 
     """ Pega o ticket do totem."""
     def get_my_ticket(self):
+        get_totem_restaurante().lock.acquire() # Lock no mutex(lock de totem) para proteger o acesso à região crítica
         self._ticket_number = get_totem_restaurante().get_ticket()
+        get_totem_restaurante().lock.release() # Unlock no mutex(lock de totem) que protege esta região crítica
         
         print("[TICKET] - O cliente {} pegou o ticket.".format(self._id))
 
